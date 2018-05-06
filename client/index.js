@@ -22,7 +22,7 @@ class App extends React.Component {
     return (
     	<div>
       <button>
-        Say hello
+        Say hello3
       </button>
       </div>
     );

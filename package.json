@@ -5,17 +5,17 @@
   "main": "tmp/index.js",
   "scripts": {
     "start": "node server",
-    "build": "webpack --config ./webpack.production.config.js --progress --profile --colors",
+    "build": "webpack --config ./webpack.config.js --progress --profile --colors",
     "clean": "rimraf build",
     "dev": "webpack --mode development",
-    "webpack": "webpack --mode production"
+    "prod": "webpack --mode production"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sunhannie/ftc-platform-react.git"
   },
   "files": [
-    "build"
+    "tmp"
   ],
   "keywords": [
     "platfrom",
@@ -50,14 +50,7 @@
     "sass-mq": "^4.0.2",
     "source-map": "^0.7.2"
   },
-  "jest": {
-    "moduleNameMapper": {
-      "(\\.css|\\.scss)$": "identity-obj-proxy"
-    },
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest"
-    }
-  },
+
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-jest": "^22.4.3",

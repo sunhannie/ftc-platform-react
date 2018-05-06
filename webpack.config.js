@@ -8,8 +8,9 @@ module.exports = {
     devtool: 'cheap-module-eval-source-map',
     entry:
     {
-        'index':path.join(__dirname, 'client/index.js')
-        // 'index':['webpack-hot-middleware/client','./client/index.js'],
+        // 'index':path.join(__dirname, 'client/index.js')
+        // 'index':['webpack-hot-middleware/client?noInfo=true&reload=true','./client/index.js'],
+        'index':['./client/index.js']
     },
    
     output: {
@@ -27,9 +28,9 @@ module.exports = {
                     path.join(__dirname, 'client'),
                     // path.join(__dirname, "client","scripts")
                 ],
-                // exclude: [
-                //     path.resolve(__dirname, "node_modules")
-                // ],
+                exclude: [
+                    path.resolve(__dirname, "node_modules")
+                ],
                 loader: "babel-loader",
                 options: {
                     presets: ['react','es2015']
@@ -76,10 +77,23 @@ module.exports = {
         maxEntrypointSize: 400000, // int (in bytes)
     },
 
+
+      // devServer: {
+      //   proxy: { // proxy URLs to backend development server
+      //     '/api': 'http://localhost:3000'
+      //   },
+      //   contentBase: path.join(__dirname, 'public'), // boolean | string | array, static file location
+      //   compress: true, // enable gzip compression
+      //   historyApiFallback: true, // true for index.html upon 404, object for multiple paths
+      //   hot: true, // hot module replacement. Depends on HotModuleReplacementPlugin
+      //   https: false, // true for self-signed, object for cert authority
+      //   noInfo: true, // only errors & warns on hot reload
+      // },
+
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin()
     ],
-    // watch: true
+    watch: true //这意味着在初始构建之后，webpack将继续监视任何已解析文件的更改。手表模式默认关闭
     
 };
