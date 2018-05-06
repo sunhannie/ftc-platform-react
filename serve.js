@@ -8,7 +8,7 @@ const compiler = webpack(config);
 const fsp = require('fs.promised');
 const fs = require('fs');
 const app = new Koa();
-// const router = new Router();
+const router = new Router();
 
 const hot = require('webpack-hot-middleware');
 const dev = require('webpack-dev-middleware');
@@ -29,6 +29,7 @@ const webpackDevOptions = {
       chunks: false,
       chunkModules: false
     },
+
     headers: {
       'Access-Control-Allow-Origin': '*'
     }
@@ -46,45 +47,40 @@ const hotM = async function (ctx, next) {
   console.log('hotM1');
   hot(compiler);
   next();
-
-  
   console.log('hotM2');
 };
 
 
-
-
-const main = async function (ctx, next) {
-  console.log('main1');
+// const main = async function (ctx, next) {
+//   console.log('main1');
   
-  ctx.response.type = 'html';
-  // ctx.response.body = 'hello world';
-  // ctx.response.body = fs.readFile('./client/index.html');
-  // next();
-  // fs.readFile('./client/index.html','utf8', (err,data)=>{
-  //   if(err){
-  //     console.log('main err'+err);
-    
-  //   }else{
-  //     console.log('main2');
-  //     data1 = data;
+//   ctx.response.type = 'html';
 
-  //   }
-  // });
-  ctx.response.body = fs.readFileSync('./client/index.html');
+//   ctx.response.body = fs.readFileSync('./client/index.html');
+//   next();
+
+// };
 
 
- 
-  // ctx.response.body = await fsp.readFile('./client/index.html', 'utf8');  //加上它会先执行hotM2，再执行main2
-  
-  
-};
-app.use(devM);
-app.use(hotM);
-app.use(main);
+const middlewares = compose([devM, hotM]);
+app.use(middlewares);
 
-// const middlewares = compose([devM, hotM, main]);
-// app.use(middlewares);
+
+
+router.get('/',(ctx, next)=>{
+    ctx.type = 'html';
+    ctx.body = fs.readFileSync('./client/index.html');
+});
+
+router.get('/tmp/*',(ctx, next)=>{
+    ctx.body = fs.readFileSync('./tmp/index.js');
+});
+
+
+app.use(router.routes())
+   .use(router.allowedMethods());
+
+
 
 app.listen(9000, 'localhost', err => {
   if (err) {
@@ -94,14 +90,3 @@ app.listen(9000, 'localhost', err => {
   console.log('Listening at http://localhost:9000');
 });
 
-
-
-
-
-  // fs.readFile('index.html', (err,data)=>{
-  //   if(err){
-      
-  //   }else{
-  //     ctx.response.body = data
-  //   }
-  // })

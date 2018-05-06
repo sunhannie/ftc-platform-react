@@ -2,10 +2,11 @@
   "name": "ftc-platform-react",
   "version": "1.0.0",
   "description": "It can guide user to download app in different platform",
-  "main": "index.js",
+  "main": "tmp/index.js",
   "scripts": {
     "start": "node server",
     "build": "webpack --config ./webpack.production.config.js --progress --profile --colors",
+    "clean": "rimraf build",
     "dev": "webpack --mode development",
     "webpack": "webpack --mode production"
   },
