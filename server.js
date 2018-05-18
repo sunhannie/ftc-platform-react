@@ -13,6 +13,7 @@ const router = new Router();
 
 const compose = require('koa-compose');
 const webpackMiddleware = require('koa-webpack');
+const render = require('./util/render.js');
 
 const webpackDevOptions = {
   noInfo: true,
@@ -36,14 +37,20 @@ app.use(webpackMiddleware({
 }));
 
 
-router.get('/',(ctx, next)=>{
-    ctx.type = 'html';
-    ctx.body = fs.readFileSync('./client/index.html');
+// router.get('/',(ctx, next)=>{
+//     ctx.type = 'html';
+//     ctx.body = fs.readFileSync('./client/index.html');
+// });
+
+router.get('/', async ctx => {
+  ctx.body = await render('index.html', {
+    indexName: 'index demo'
+  })
 });
 
-router.get('/tmp/*',(ctx, next)=>{
-    ctx.body = fs.readFileSync('./tmp/index.js');
-});
+// router.get('/tmp/*',(ctx, next)=>{
+//     ctx.body = fs.readFileSync('./tmp/index.js');
+// });
 
 
 app.use(router.routes())

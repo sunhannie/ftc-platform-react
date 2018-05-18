@@ -17,7 +17,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'tmp/'),  //这儿好像没起作用
         filename: '[name].js', //输出文件名，[name].js默认是main.js。如果指定则是指定名
-        publicPath: 'tmp/',
+        publicPath: '/tmp/', //这个一定得注意，之前我写tmp/，导致一直找不到js文件路劲
         chunkFilename: "[chunkhash].js"
     },
     module: {
@@ -48,14 +48,14 @@ module.exports = {
                 test: /\.json?$/,
                 loader: 'json'
              },
-            //  {
-            //     test: /\.scss$/,
-            //     include: [
-            //         path.join(__dirname, 'client','styles'),
-            //         path.join(__dirname, 'component','nav')
-            //     ],
-            //     loader: 'style-loader!css-loader!sass-loader?sourceMap=true&sourceMapContents=true'  
-            //  },
+             {
+                test: /\.scss$/,
+                // include: [
+                //     path.join(__dirname, 'client','styles'),
+                //     path.join(__dirname, 'component','nav')
+                // ],
+                loader: 'style-loader!css-loader!sass-loader?sourceMap=true&sourceMapContents=true'  
+             },
              {
                 test: /\.html$/,
                 use: [
@@ -67,40 +67,23 @@ module.exports = {
                     }
                 ]
             },
-            {
-                test:  /\.scss$/,
-                include: [
-                    // path.join(__dirname, 'client','styles'),
-                    // path.join(__dirname, 'component','nav')
-                ],
-                use: [
+            // {
+            //     test:  /\.scss$/,
+            //     include: [
+            //         path.join(__dirname, 'client','styles'),
+            //         path.join(__dirname, 'component','nav')
+            //     ],
+            //     use: [
 
-                    { loader: 'style-loader' },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            modules: true
-                        }
-                    }
-                ]
-            },
-            {
-                test:  /\.scss$/,
-                // include: [
-                //     path.join(__dirname, 'client','styles'),
-                //     path.join(__dirname, 'component','scss'),
-                // ],
-                use: [
-
-                    { loader: 'style-loader' },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            modules: true
-                        }
-                    }
-                ]
-            }
+            //         { loader: 'style-loader' },
+            //         {
+            //             loader: 'css-loader',
+            //             options: {
+            //                 modules: true
+            //             }
+            //         }
+            //     ]
+            // }
         ]  //end rules    
     },
      resolve: {
