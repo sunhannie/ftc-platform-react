@@ -1,16 +1,17 @@
 var webpack = require('webpack');
 var path = require('path');
 // var HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const sassLoader = 'style-loader!css-loader?modules&importLoaders&localIdentName=[name]__[local]__[hash:base64:5]!sass-loader?sourceMap=true&sourceMapContents=true';
+const sassLoaderDemo = 'style-loader!css-loader!sass-loader?sourceMap=true&sourceMapContents=true';
 
 module.exports = {
     mode: "production", 
     devtool: 'cheap-module-eval-source-map',
     entry:
     {
-        // 'index':path.join(__dirname, 'client/index.js')
-        // 'index':['webpack-hot-middleware/client?noInfo=true&reload=true','./client/index.js'],
-        'index':['./client/index.js']
+        'index':path.join(__dirname, 'client/index.js')
+        // 'index':['./client/scripts/index.js'],
+        // 'index':['./client/index.js']
     },
    
     output: {
@@ -26,7 +27,7 @@ module.exports = {
                 test: /\.js|\.jsx$/,
                 include: [
                     path.join(__dirname, 'client'),
-                    // path.join(__dirname, "client","scripts")
+                    path.join(__dirname, "client","component")
                 ],
                 exclude: [
                     path.resolve(__dirname, "node_modules")
@@ -38,7 +39,10 @@ module.exports = {
              },
              {
                 test: /\.css$/,
-                loader: "style!css"
+                include: [
+                    path.join(__dirname, "component","nav")
+                ],
+                loader: sassLoader
              },
              {
                 test: /\.json?$/,
@@ -47,9 +51,11 @@ module.exports = {
              {
                 test: /\.scss$/,
                 include: [
-                    path.join(__dirname, "client","styles")
+                    path.join(__dirname, "client","styles"),
+                    path.join(__dirname, "component","nav")
                 ],
                 loader: 'style-loader!css-loader!sass-loader?sourceMap=true&sourceMapContents=true'
+                
              },
              {
                 test: /\.html$/,
@@ -82,9 +88,9 @@ module.exports = {
       //   proxy: { // proxy URLs to backend development server
       //     '/api': 'http://localhost:3000'
       //   },
-      //   contentBase: path.join(__dirname, 'public'), // boolean | string | array, static file location
+      //   contentBase: path.join(__dirname, 'client'), // boolean | string | array, static file location
       //   compress: true, // enable gzip compression
-      //   historyApiFallback: true, // true for index.html upon 404, object for multiple paths
+      //   historyApiFallback: true, // true for index.html upon 404, object for multiple paths  (不跳转)
       //   hot: true, // hot module replacement. Depends on HotModuleReplacementPlugin
       //   https: false, // true for self-signed, object for cert authority
       //   noInfo: true, // only errors & warns on hot reload
@@ -92,7 +98,7 @@ module.exports = {
 
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoEmitOnErrorsPlugin()
+        // new webpack.NoEmitOnErrorsPlugin()
     ],
     watch: true //这意味着在初始构建之后，webpack将继续监视任何已解析文件的更改。手表模式默认关闭
     

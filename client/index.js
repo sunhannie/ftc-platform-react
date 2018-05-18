@@ -1,12 +1,8 @@
-
-// function aa(){
-// 	console.log('finish');
-// }
-
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+
+import Nav from './component/nav/nav.js';
 
 class App extends React.Component {
 
@@ -14,16 +10,15 @@ class App extends React.Component {
     super(props);
     this.state = {message: 'Hello!'};
   }
-  // sayHello = () => {
-  //   alert(this.state.message);
-  // }
+
 
   render() {
     return (
     	<div>
-      <button>
-        Say hello3
-      </button>
+        <Nav />
+        <button>
+          Say hello1
+        </button>
       </div>
     );
   }

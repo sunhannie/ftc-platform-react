@@ -14,6 +14,10 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const compose = require('koa-compose');
 
+// const indexRoute = require('./routes/index.js'); //引入路由
+
+
+
 const webpackDevOptions = {
     publicPath: config.output.publicPath,
     hot: true,
@@ -22,6 +26,7 @@ const webpackDevOptions = {
     watchOptions: {
         ignored: /node_modules/,
     },
+    lazy:true,
     // noInfo: false,
     // reload: true,
     // stats: {
@@ -39,13 +44,13 @@ const webpackDevOptions = {
     }
 };
 
-// 执行2遍，是因为执行2遍compiler
+// 执行2遍，是因为执行2遍compiler;devM执行第二次会出现执行2遍  lazy:fase会执行2遍
 
 const devM = async function (ctx, next) {
-  console.log('devM1');
+  // console.log('devM1');
   webpackDevMiddleware(compiler, webpackDevOptions);
   await next();
-  console.log('devM2');
+  // console.log('devM2');
 };
 
 
@@ -56,23 +61,25 @@ const hotM = async function (ctx, next) {
    heartbeat: 2000,
   });
   await next();
-  console.log('hotM2');
+  // console.log('hotM2');
 };
 
 
-// const main = async function (ctx, next) {
-//   console.log('main1');
+const main = async function (ctx, next) {
+  // console.log('main1');
   
-//   ctx.response.type = 'html';
+  ctx.response.type = 'html';
 
-//   ctx.response.body = fs.readFileSync('./client/index.html');
-//   next();
+  ctx.response.body = fs.readFileSync('./client/index.html');
+  next();
 
-// };
+};
 
 
 const middlewares = compose([devM, hotM]);
 app.use(middlewares);
+// app.use(main);
+
 
 let devMiddleware = webpackDevMiddleware(compiler, webpackDevOptions);
 
@@ -86,13 +93,15 @@ path - 中间件将服务事件流的路径必须与客户端设置相匹配
 heartbeat - 多长时间将心跳更新发送到客户端以保持连接的活动。应小于客户的timeout设置 - 通常设置为其一半值。
 */
 // app.use(devMiddleware);
-
 // app.use(hotMiddleware);
 
 
 router.get('/',(ctx, next)=>{
     ctx.type = 'html';
     ctx.body = fs.readFileSync('./client/index.html');
+    // ctx.body = render('./client/index.html',{
+    //   title : 'Koa2 Test!'
+    // });
 });
 
 router.get('/tmp/*',(ctx, next)=>{
@@ -101,9 +110,9 @@ router.get('/tmp/*',(ctx, next)=>{
 
 
 app.use(router.routes())
-   // .use(router.allowedMethods());
+   .use(router.allowedMethods());
 
-
+// indexRoute(router); //应用路由
 
 app.listen(9000, 'localhost', err => {
   if (err) {
