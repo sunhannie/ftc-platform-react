@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import Nav from './component/nav/nav.js';
 
+import main from './styles/main.scss';
 class App extends React.Component {
 
   constructor(props) {
@@ -17,8 +18,9 @@ class App extends React.Component {
     	<div>
         <Nav />
         <button>
-          Say hello1
+          Say hello2
         </button>
+        <div className="hgh">test css</div>
       </div>
     );
   }

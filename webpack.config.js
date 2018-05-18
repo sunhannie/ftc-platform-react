@@ -9,9 +9,9 @@ module.exports = {
     devtool: 'cheap-module-eval-source-map',
     entry:
     {
-        'index':path.join(__dirname, 'client/index.js')
+        // 'index':path.join(__dirname, 'client/index.js')
         // 'index':['./client/scripts/index.js'],
-        // 'index':['./client/index.js']
+        'index':['./client/index.js']
     },
    
     output: {
@@ -39,24 +39,23 @@ module.exports = {
              },
              {
                 test: /\.css$/,
-                include: [
-                    path.join(__dirname, "component","nav")
-                ],
+                // include: [
+                //     path.join(__dirname, 'component','nav')
+                // ],
                 loader: sassLoader
              },
              {
                 test: /\.json?$/,
                 loader: 'json'
              },
-             {
-                test: /\.scss$/,
-                include: [
-                    path.join(__dirname, "client","styles"),
-                    path.join(__dirname, "component","nav")
-                ],
-                loader: 'style-loader!css-loader!sass-loader?sourceMap=true&sourceMapContents=true'
-                
-             },
+            //  {
+            //     test: /\.scss$/,
+            //     include: [
+            //         path.join(__dirname, 'client','styles'),
+            //         path.join(__dirname, 'component','nav')
+            //     ],
+            //     loader: 'style-loader!css-loader!sass-loader?sourceMap=true&sourceMapContents=true'  
+            //  },
              {
                 test: /\.html$/,
                 use: [
@@ -67,15 +66,49 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            {
+                test:  /\.scss$/,
+                include: [
+                    // path.join(__dirname, 'client','styles'),
+                    // path.join(__dirname, 'component','nav')
+                ],
+                use: [
+
+                    { loader: 'style-loader' },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true
+                        }
+                    }
+                ]
+            },
+            {
+                test:  /\.scss$/,
+                // include: [
+                //     path.join(__dirname, 'client','styles'),
+                //     path.join(__dirname, 'component','scss'),
+                // ],
+                use: [
+
+                    { loader: 'style-loader' },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true
+                        }
+                    }
+                ]
             }
-        ]      
+        ]  //end rules    
     },
      resolve: {
         alias: {
       //Create aliases to import or require certain modules more easily. Eg: in app.js, "import React from '../node_modules/react';" can now be written as "import React from 'react"
             'react': path.join(__dirname,'node_modules','react')
         },
-        extensions: [".js", ".json", ".jsx", ".css"],
+        extensions: [".js", ".json", ".jsx", ".css", ".scss"],
     },
      performance: {
         hints:  false, // enum
@@ -83,22 +116,8 @@ module.exports = {
         maxEntrypointSize: 400000, // int (in bytes)
     },
 
-
-      // devServer: {
-      //   proxy: { // proxy URLs to backend development server
-      //     '/api': 'http://localhost:3000'
-      //   },
-      //   contentBase: path.join(__dirname, 'client'), // boolean | string | array, static file location
-      //   compress: true, // enable gzip compression
-      //   historyApiFallback: true, // true for index.html upon 404, object for multiple paths  (不跳转)
-      //   hot: true, // hot module replacement. Depends on HotModuleReplacementPlugin
-      //   https: false, // true for self-signed, object for cert authority
-      //   noInfo: true, // only errors & warns on hot reload
-      // },
-
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        // new webpack.NoEmitOnErrorsPlugin()
     ],
     watch: true //这意味着在初始构建之后，webpack将继续监视任何已解析文件的更改。手表模式默认关闭
     
