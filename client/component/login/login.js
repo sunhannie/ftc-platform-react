@@ -64,6 +64,7 @@ class Login extends React.Component {
     });
     return true;
   }
+
   handleChange(event) {
     this.setState({username: event.target.value});  
   }
@@ -109,6 +110,7 @@ login(){
   const username = this.state.username;
   const password = this.state.password;
   const that = this;
+  // validatePassword(password);
   fetch('/jsonData', {
         method: 'get',
         headers: {
@@ -121,9 +123,12 @@ login(){
           if (user.username === username && user.password === password) {
             console.log('登录成功'+that.state.username);
           }else{
-            that.setState({
-              errorForPassword: '校核用户名或者密码'
-            });
+            if(!!username && !!password){
+              that.setState({
+                errorForPassword: '校核用户名或者密码'
+              });
+            }
+            
           }
         }
         
