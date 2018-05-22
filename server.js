@@ -57,7 +57,17 @@ router.get('/signup', async ctx => {
 //     ctx.body = fs.readFileSync('./tmp/index.js');
 // });
 
+router.get('/jsonData',(ctx, next)=>{
+  // console.log(fs.readFileSync('./data.json'));
+    ctx.body = fs.readFileSync('./data.json');
+});
 
+// 这里是为什么不能的读取到
+router.get('/jsonDataa',(ctx, next)=>{
+    ctx.type = 'json';
+    // ctx.body = fs.readFileSync('./client/component/login/jsonData.json');
+    ctx.body = fs.readFileSync('./package.json');
+});
 app.use(router.routes())
    .use(router.allowedMethods());
 

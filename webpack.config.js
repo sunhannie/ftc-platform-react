@@ -13,9 +13,6 @@ module.exports = {
         'index':['./client/index.js'],
         'signup':['./client/scripts/signup.js']
     },
-    // entry: [
-    //     './client/index.js'
-    // ],
     output: {
         path: path.join(__dirname, 'tmp/'),  //这儿好像没起作用
         filename: '[name].js', //输出文件名，[name].js默认是main.js。如果指定则是指定名
@@ -29,6 +26,7 @@ module.exports = {
                 test: /\.js|\.jsx$/,
                 include: [
                     path.join(__dirname, 'client'),
+                    path.join(__dirname, 'client',"scripts"),
                     path.join(__dirname, "client","component","login"),
                     path.join(__dirname, "client","component","nav"),
                 ],

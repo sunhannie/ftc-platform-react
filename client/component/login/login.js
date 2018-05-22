@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 // import CSSModules from 'react-css-modules';
-
+import { Users } from './data.js';
 import login from './login.scss';
 class Login extends React.Component {
   constructor(props) {
@@ -19,6 +19,7 @@ class Login extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeRM = this.handleChangeRM.bind(this);
+    this.login = this.login.bind(this);
   }
 
    validateUsername(event) {
@@ -103,7 +104,35 @@ handleChangeRM(event){
     }
     // this.setState({rememberMe: event.target.value});
 }
-
+// 此函数可以setState，也可以this.state，但是不能再then中使用，我觉得是this的原因，需要进一步研究用法
+login(){
+  const username = this.state.username;
+  const password = this.state.password;
+  const that = this;
+  fetch('/jsonData', {
+        method: 'get',
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+        },
+        // body: 'userName='+values.userName+'&password='+values.password,
+    }).then(response => response.json()).then(function(res) {
+        console.log(res)
+        for (let user of res.Users) {
+          if (user.username === username && user.password === password) {
+            console.log('登录成功'+that.state.username);
+          }else{
+            that.setState({
+              errorForPassword: '校核用户名或者密码'
+            });
+          }
+        }
+        
+    });
+    // this.setState({
+    //   'rememberMe': '1'
+    // });
+    
+}
 /**
  *  箭头函数体内的this对象，就是`定义时所在的对象，而不是使用时所在的对象`。
     handleChangeRM = (event) => {this.setState({rememberMe: event.target.value}); }
@@ -132,7 +161,7 @@ handleChangeRM(event){
                 </div>
                 <div className = "input-section">
                     {/*<input className="login-btn" type="submit" name="login" value="登录"/>*/}
-                    <button className="login-btn" type="submit" >登录</button>
+                    <button className="login-btn" type="submit" onClick={this.login}>登录</button>
                 </div>
                 <div>还没有FT中文网账号?<a href="/signup?source=login">创建</a></div>
             </div>

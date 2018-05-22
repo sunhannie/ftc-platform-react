@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 import Nav from '../component/nav/nav.js';
-import Login from '../component/login/login.js';
+import Register from '../component/register/register.js';
 
 
 class App extends React.Component {
@@ -18,7 +18,7 @@ class App extends React.Component {
     return (
     	<div>
         <Nav />
-        <Login />
+        <Register />
         
       </div>
     );
