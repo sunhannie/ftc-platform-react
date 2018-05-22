@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 import Nav from './component/nav/nav.js';
+import Login from './component/Login/login.js';
 
 import main from './styles/main.scss';
 class App extends React.Component {
@@ -17,10 +18,11 @@ class App extends React.Component {
     return (
     	<div>
         <Nav />
-        <button>
+        <Login />
+        {/*<button>
           Say hello2
         </button>
-        <div className="hgh">test css</div>
+        <div className="hgh">test css</div>*/}
       </div>
     );
   }

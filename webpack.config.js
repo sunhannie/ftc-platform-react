@@ -42,6 +42,9 @@ module.exports = {
                 // include: [
                 //     path.join(__dirname, 'component','nav')
                 // ],
+                exclude: [
+                    path.resolve(__dirname, "node_modules")
+                ],
                 loader: sassLoader
              },
              {
@@ -50,10 +53,9 @@ module.exports = {
              },
              {
                 test: /\.scss$/,
-                // include: [
-                //     path.join(__dirname, 'client','styles'),
-                //     path.join(__dirname, 'component','nav')
-                // ],
+                exclude: [
+                    path.resolve(__dirname, "node_modules")
+                ],
                 loader: 'style-loader!css-loader!sass-loader?sourceMap=true&sourceMapContents=true'  
              },
              {
@@ -68,21 +70,31 @@ module.exports = {
                 ]
             },
             // {
-            //     test:  /\.scss$/,
-            //     include: [
-            //         path.join(__dirname, 'client','styles'),
-            //         path.join(__dirname, 'component','nav')
-            //     ],
-            //     use: [
+                // test:  /\.scss$/,
+                // include: [
+                //     path.join(__dirname, 'client','styles'),
+                //     path.join(__dirname, 'component','nav')
+                // ],
+                // use: [
 
-            //         { loader: 'style-loader' },
-            //         {
-            //             loader: 'css-loader',
-            //             options: {
-            //                 modules: true
-            //             }
-            //         }
-            //     ]
+                //     {  
+                //         loader: 'style-loader' 
+                //     },
+                //     {
+                //         loader: "sass-loader",
+                //         options: {
+                //             includePaths: [ 
+                //                 path.join(__dirname, 'component','login')
+                //             ]
+                //         }
+                //     },
+                //     {
+                //         loader: 'css-loader',
+                //         options: {
+                //             modules: true
+                //         }
+                //     }
+                // ]
             // }
         ]  //end rules    
     },
@@ -102,6 +114,6 @@ module.exports = {
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
     ],
-    watch: true //这意味着在初始构建之后，webpack将继续监视任何已解析文件的更改。手表模式默认关闭
+    // watch: true //这意味着在初始构建之后，webpack将继续监视任何已解析文件的更改。手表模式默认关闭
     
 };
