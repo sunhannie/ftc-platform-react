@@ -10,7 +10,8 @@ module.exports = {
     entry:
     {
         // 'index':path.join(__dirname, 'client/index.js')
-        'index':['./client/index.js']
+        'index':['./client/index.js'],
+        'signup':['./client/scripts/signup.js']
     },
     // entry: [
     //     './client/index.js'
@@ -58,10 +59,10 @@ module.exports = {
                 exclude: [
                     path.resolve(__dirname, "node_modules")
                 ],
-                include: [
-                    path.join(__dirname, "client","component","login"),
-                    path.join(__dirname, "client","component","nav")
-                ],
+                // include: [
+                //     path.join(__dirname, "client","component","login"),
+                //     path.join(__dirname, "client","component","nav")
+                // ],
                 loader: sassLoaderDemo  
              },
              {

@@ -15,9 +15,10 @@ class Login extends React.Component {
       errorForPassword: '',
       shouldHide:false,
       value: '',
-      rememberMe:false
+      rememberMe:'1'
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeRM = this.handleChangeRM.bind(this);
   }
 
    validateUsername(event) {
@@ -88,12 +89,29 @@ class Login extends React.Component {
     }
   }
 
-// 箭头函数体内的this对象，就是`定义时所在的对象，而不是使用时所在的对象`。
-//  handleChangeRM = (event) => {this.setState({rememberMe: event.target.value}); }
+handleChangeRM(event){
+    const target = event.target;
+    const checked1 = target.type === 'checkbox' ? target.checked : target.value;
+    if (checked1) {
+        this.setState({
+        rememberMe: '1'
+        });
+    } else {
+        this.setState({
+        rememberMe: '0'
+        });
+    }
+    // this.setState({rememberMe: event.target.value});
+}
 
-
+/**
+ *  箭头函数体内的this对象，就是`定义时所在的对象，而不是使用时所在的对象`。
+    handleChangeRM = (event) => {this.setState({rememberMe: event.target.value}); }
+    此种写法有错，后期进一步研究，下面链接有箭头函数实例
+    https://segmentfault.com/q/1010000010918131
+ */
   render() {
-    const {username, password, errorForUsername, errorForPassword} = this.state;
+    const {username, password,rememberMe, errorForUsername, errorForPassword} = this.state;
     return (
       <div className="login-container">
         <div className="content-section">
@@ -108,7 +126,8 @@ class Login extends React.Component {
                     <div className="error-hint" id="pw-error">{errorForPassword}</div>
                 </div>
                 <div className = "input-section remember-center">
-                    <input type="checkbox" id="rememberMe"  name="rememberMe" checked onChange={this.handleChange}/>
+                    {/*<input type="checkbox" id="rememberMe"  name="rememberMe" value={rememberMe} checked={rememberMe==='1'} onChange={() => this.handleChangeRM(this)}/>*/}
+                    <input type="checkbox" id="rememberMe"  name="rememberMe" value={rememberMe} checked={rememberMe==='1'} onChange={this.handleChangeRM}/>
                     <label htmlFor="rememberMe">记住账号</label>
                 </div>
                 <div className = "input-section">

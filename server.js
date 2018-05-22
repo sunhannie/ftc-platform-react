@@ -44,10 +44,15 @@ app.use(webpackMiddleware({
 
 router.get('/', async ctx => {
   ctx.body = await render('index.html', {
-    indexName: 'index demo'
+    pageTitle: '登录'
   })
 });
 
+router.get('/signup', async ctx => {
+  ctx.body = await render('signup.html', {
+    pageTitle: '注册'
+  })
+});
 // router.get('/tmp/*',(ctx, next)=>{
 //     ctx.body = fs.readFileSync('./tmp/index.js');
 // });
