@@ -5,8 +5,18 @@ import classnames from 'classnames';
 import CSSModules from 'react-css-modules';
 
 import nav from './nav.scss';
+// @CSSModules(nav, {allowMultiple: false})
 
 class Nav extends React.Component {
+  // static propTypes = {
+  //   postUrl: PropTypes.string,
+  //   findPasswordUrl: PropTypes.string,
+  //   registerUrl: PropTypes.string
+  // };
+
+  constructor(props) {
+    super(props);
+  }
 
   render() {
     return (

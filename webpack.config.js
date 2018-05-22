@@ -5,15 +5,16 @@ const sassLoader = 'style-loader!css-loader?modules&importLoaders&localIdentName
 const sassLoaderDemo = 'style-loader!css-loader!sass-loader?sourceMap=true&sourceMapContents=true';
 
 module.exports = {
-    mode: "production", 
+    mode: "development", 
     devtool: 'cheap-module-eval-source-map',
     entry:
     {
         // 'index':path.join(__dirname, 'client/index.js')
-        // 'index':['./client/scripts/index.js'],
         'index':['./client/index.js']
     },
-   
+    // entry: [
+    //     './client/index.js'
+    // ],
     output: {
         path: path.join(__dirname, 'tmp/'),  //这儿好像没起作用
         filename: '[name].js', //输出文件名，[name].js默认是main.js。如果指定则是指定名
@@ -27,7 +28,8 @@ module.exports = {
                 test: /\.js|\.jsx$/,
                 include: [
                     path.join(__dirname, 'client'),
-                    path.join(__dirname, "client","component")
+                    path.join(__dirname, "client","component","login"),
+                    path.join(__dirname, "client","component","nav"),
                 ],
                 exclude: [
                     path.resolve(__dirname, "node_modules")
@@ -37,16 +39,16 @@ module.exports = {
                     presets: ['react','es2015']
                 },
              },
-             {
-                test: /\.css$/,
-                // include: [
-                //     path.join(__dirname, 'component','nav')
-                // ],
-                exclude: [
-                    path.resolve(__dirname, "node_modules")
-                ],
-                loader: sassLoader
-             },
+            //  {
+            //     test: /\.css$/,
+            //     include: [
+            //         path.join(__dirname, "client","component")
+            //     ],
+            //     exclude: [
+            //         path.resolve(__dirname, "node_modules")
+            //     ],
+            //     loader: sassLoader
+            //  },
              {
                 test: /\.json?$/,
                 loader: 'json'
@@ -56,7 +58,11 @@ module.exports = {
                 exclude: [
                     path.resolve(__dirname, "node_modules")
                 ],
-                loader: 'style-loader!css-loader!sass-loader?sourceMap=true&sourceMapContents=true'  
+                include: [
+                    path.join(__dirname, "client","component","login"),
+                    path.join(__dirname, "client","component","nav")
+                ],
+                loader: sassLoaderDemo  
              },
              {
                 test: /\.html$/,
@@ -112,8 +118,10 @@ module.exports = {
     },
 
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-    ],
+        // new webpack.HotModuleReplacementPlugin()
+    ]
     // watch: true //这意味着在初始构建之后，webpack将继续监视任何已解析文件的更改。手表模式默认关闭
     
 };
+
+// 'style-loader!css-loader!sass-loader?sourceMap=true&sourceMapContents=true'  

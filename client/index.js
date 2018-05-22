@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 import Nav from './component/nav/nav.js';
-import Login from './component/Login/login.js';
+import Login from './component/login/login.js';
 
-import main from './styles/main.scss';
+
 class App extends React.Component {
 
   constructor(props) {
@@ -19,10 +19,7 @@ class App extends React.Component {
     	<div>
         <Nav />
         <Login />
-        {/*<button>
-          Say hello2
-        </button>
-        <div className="hgh">test css</div>*/}
+        
       </div>
     );
   }
